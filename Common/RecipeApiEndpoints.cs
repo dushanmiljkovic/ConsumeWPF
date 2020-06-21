@@ -19,8 +19,10 @@
         //Dish
         public static string DishCreate => "api/Related/create-dishe";
         public static string DishGet(string id) => "api/Related/dishe/" + id;
+        public static string DishAll => "api/Related/dishe/all";
         public static string DrinkCreate => "api/Related/create-drink";
         public static string DrinkGet(string id) => "api/Related/drink/" + id;
+        public static string DrinkAll => "api/Related/drink/all";
         public static string DrinkUpdate(string id) => "api/Related/update-drink/" + id;
         public static string DrinkDelete(string id) => "api/Related/delete-drink/" + id;
         public static string RelateDrinkDish => "api/Related/relate-drink-dish";

@@ -1,4 +1,5 @@
 ﻿using Common;
+using Models.Domein;
 using Models.DTO;
 using Models.RequestModels;
 using Newtonsoft.Json;
@@ -50,7 +51,7 @@ namespace EatCodeDesktop.Helper
 
         }
         public async Task<string> UpdateRecipe(UpdateRecipeRequestModel model)
-        { 
+        {
             var data = ConvertObjToJsonStringContent(model);
             using (HttpResponseMessage responseMessage = await apiClient.PostAsync(RecipeApiEndpoints.RecipeUpdate, data))
             {
@@ -76,7 +77,7 @@ namespace EatCodeDesktop.Helper
                 }
                 else
                 {
-                    return false;
+                    throw new Exception(responseMessage.ReasonPhrase);
                 }
             }
         }
@@ -92,7 +93,7 @@ namespace EatCodeDesktop.Helper
                 }
                 else
                 {
-                    return null;
+                    throw new Exception(responseMessage.ReasonPhrase);
                 }
             }
 
@@ -128,19 +129,162 @@ namespace EatCodeDesktop.Helper
             return data;
         }
 
-        public Task<bool> CreateDishe(DisheDTO model)
+        public async Task<string> CreateDishe(DisheDTO model)
         {
-            throw new NotImplementedException();
+            var data = ConvertObjToJsonStringContent(model);
+            using (HttpResponseMessage responseMessage = await apiClient.PostAsync(RecipeApiEndpoints.DishCreate, data))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<string>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
         }
 
-        public Task<bool> UpdateDishe(DisheDTO model)
+        public async Task<string> UpdateDishe(DisheDTO model)
         {
-            throw new NotImplementedException();
+            var data = ConvertObjToJsonStringContent(model);
+            using (HttpResponseMessage responseMessage = await apiClient.PostAsync(RecipeApiEndpoints.DishCreate, data))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<string>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
         }
 
-        public Task<bool> DeleteDishe(DisheDTO model)
+        public async Task<string> CreateDrink(DrinkDTO model)
         {
-            throw new NotImplementedException();
+            var data = ConvertObjToJsonStringContent(model);
+            using (HttpResponseMessage responseMessage = await apiClient.PostAsync(RecipeApiEndpoints.DrinkCreate, data))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<string>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
         }
+
+        public async Task<string> UpdateDrink(DrinkDTO model)
+        {
+            var data = ConvertObjToJsonStringContent(model);
+            using (HttpResponseMessage responseMessage = await apiClient.PostAsync(RecipeApiEndpoints.DrinkUpdate(model.Id), data))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<string>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<bool> DeleteDrink(string id)
+        {
+            using (HttpResponseMessage responseMessage = await apiClient.GetAsync(RecipeApiEndpoints.DrinkDelete(id)))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<bool>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<List<DisheDTO>> GetAllDishes()
+        {
+            using (HttpResponseMessage responseMessage = await apiClient.GetAsync(RecipeApiEndpoints.DishAll))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<List<DisheDTO>>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<List<DrinkDTO>> GetAllDrinks()
+        {
+            using (HttpResponseMessage responseMessage = await apiClient.GetAsync(RecipeApiEndpoints.DrinkAll))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<List<DrinkDTO>>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<bool> RelateDisheDrink(string disheId, string drinkId, DisheDrink relation)
+        {
+            var model = new RelateDisheDrinkRequestModel()
+            {
+                DisheId = disheId,
+                DrinkId = drinkId,
+                Relation = relation
+            };
+
+            var data = ConvertObjToJsonStringContent(model);
+            using (HttpResponseMessage responseMessage = await apiClient.PostAsync(RecipeApiEndpoints.RelateDrinkDish, data))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<bool>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<(Dishe, List<Drink>)> GetDishSuggestionDrinks(string disheId, DisheDrink relation)
+        {
+            var url = relation == DisheDrink.GoesWith ? RecipeApiEndpoints.DishDrinkGood(disheId) : RecipeApiEndpoints.DishDrinkNever(disheId);
+            using (HttpResponseMessage responseMessage = await apiClient.GetAsync(url))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<(Dishe, List<Drink>)>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
     }
 }

@@ -180,8 +180,8 @@ namespace EatCodeDesktop.ViewModels
             var model = ComponentExport();
             try
             {
-                var result = await apiHelper.UpdateDishe(model);
-                ShowSimpleMessage("Yey!");
+                //var result = await apiHelper.UpdateDishe(model);
+                ShowSimpleMessage("Udapting disesh is disabled!");
                 TryClose();
             }
             catch (Exception ex)
@@ -200,7 +200,8 @@ namespace EatCodeDesktop.ViewModels
             this.Origin = model.Origin;
             this.Season = model.Season;
             this.ServedOnEvents = model.ServedOnEvents;
-            this.ServedType = model.ServedType; 
+            this.ServedType = model.ServedType;
+            this.ExternalLink = model.ExternalLink;
         }
         #endregion
         #region EventsHandles
@@ -230,7 +231,7 @@ namespace EatCodeDesktop.ViewModels
                 Origin = Origin,
                 Season = Season,
                 ServedType = ServedType,
-                ServedOnEvents = ServedOnEvents
+                ServedOnEvents = ServedOnEvents                
             };
             return disheDto;
         }

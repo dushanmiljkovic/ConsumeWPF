@@ -5,8 +5,54 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EatCodeDesktop.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="800" Background="White" FontSize="24">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Komnbinator" FontSize="48" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 20"/>
+
+        <!--Column 0-->
+        <TextBlock Text="Dishes" Grid.Row="1" Grid.Column="0"/>
+        <ListBox x:Name="Dishes" Grid.Row="2" Grid.Column="0" MinHeight="200" MinWidth="150" SelectedItem="{Binding SelectedDishe}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="EditDishe" Grid.Row="4" Grid.Column="0" Content="Edit Dishe" Margin="0 20 0 0" Padding="5" />
+        <!--<Button x:Name="DeleteDish" Grid.Row="5" Grid.Column="0" Content="Delete Dishe" Margin="0 20 0 0" Padding="5" />-->
+ 
+        <!--Column 1-->
+        <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2" Margin="20 0">
+            <TextBlock Text="Relate" />
+            <TextBox x:Name="Relation" MinWidth="100" Margin="0 0 0 10"/>
+            <Button x:Name="RelateDishDrink" Content="Relate them!" Margin="0 0 0 30" Padding="5"/>
+            <Button x:Name="ShowLinksForDish" Content="Show Relations" Padding="5" /> 
+        </StackPanel>
+
+        <TextBlock Text="Drinks" Grid.Row="1" Grid.Column="2"/>
+        <ListBox x:Name="Drinks" Grid.Row="2" Grid.Column="2" MinHeight="200" MinWidth="150" SelectedItem="{Binding SelectedDrink}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="EditDrink" Grid.Row="4" Grid.Column="2" Content="Edit Drink" Margin="0 20 0 0" Padding="5" />
+        <Button x:Name="DeliteDrink" Grid.Row="5" Grid.Column="2" Content="Delete Drink" Margin="0 20 0 0" Padding="5" />
     </Grid>
 </UserControl>

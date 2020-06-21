@@ -48,22 +48,28 @@ namespace EatCodeDesktop.ViewModels
         }
         private void CreateRecipes()
         {
-            var recipeView = simpleContainer.GetInstance<RecipeViewModel>();
-            ActivateItem(recipeView);
+            var view = simpleContainer.GetInstance<RecipeViewModel>();
+            ActivateItem(view);
             _loginWM = simpleContainer.GetInstance<LoginViewModel>();
         }
 
         public void ShowDishsDrink()
         {
-           
+            var view = simpleContainer.GetInstance<CombineViewModel>();
+            ActivateItem(view);
+            _loginWM = simpleContainer.GetInstance<LoginViewModel>();
         }
         public void ShowCreateDish()
         {
-         
+            var view = simpleContainer.GetInstance<DishViewModel>();
+            ActivateItem(view);
+            _loginWM = simpleContainer.GetInstance<LoginViewModel>();
         }
         public void ShowCreateDrink()
         {
-           
+            var view = simpleContainer.GetInstance<DrinkViewModel>();
+            ActivateItem(view);
+            _loginWM = simpleContainer.GetInstance<LoginViewModel>();
         }
     }
 }
