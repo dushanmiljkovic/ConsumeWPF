@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="EatCodeDesktop.Views.RecipesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EatCodeDesktop.Views"
+             mc:Ignorable="d" 
+              d:DesignHeight="500" d:DesignWidth="600" Background="White" FontSize="24">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" /> 
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="auto" /> 
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Text="Recipes" FontSize="48" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 20"/>
+        <ListBox x:Name="Recipes" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" MinHeight="200" MinWidth="150" SelectedItem="{Binding SelectedRecipe}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button x:Name="EditRecipe" Grid.Row="2" Grid.Column="0" Content="Edit Recipe" Margin="20 20 0 0" Padding="5" />
+        <Button x:Name="DeliteRecipe" Grid.Row="2" Grid.Column="1" Content="Delite Recipe" Margin="20 20 0 0" Padding="5" />
+        <!--<Button x:Name="NewRecipe" Grid.Row="2" Grid.Column="2" Content="New Recipe" Margin="20 20 0 0" Padding="5" />-->
+ 
+    </Grid>
+</UserControl>
