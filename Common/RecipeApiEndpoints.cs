@@ -27,6 +27,7 @@
         public static string DishDrinkGoodCount(string id) => "api/Related/dish-has-good-drink/" + id;
         public static string DishDrinkGood(string id) => "api/Related/dish-good-drink/" + id;
         public static string DishDrinkNever(string id) => "api/Related/dish-never-drink/" + id;
+        public static string DerelateDisheDrink => "api/Related/derelate-drink-dish/";
 
     }
 }

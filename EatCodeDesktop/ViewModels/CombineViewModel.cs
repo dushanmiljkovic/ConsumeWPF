@@ -1,12 +1,34 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using EatCodeDesktop.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EatCodeDesktop.ViewModels
-{
-    class CombineViewModel
+{ 
+    public class CombineViewModel : Screen
     {
+        private readonly IAPIHelper apiHelper;
+        private readonly IWindowManager windowManager;
+        public CombineViewModel(IAPIHelper apiHelper, IWindowManager windowManager)
+        {
+            this.apiHelper = apiHelper;
+            this.windowManager = windowManager;
+        }
+
+        #region Props
+        #endregion
+        #region Buttons
+        #endregion
+        #region Events
+        #endregion
+        #region EventsHandles
+        #endregion
+        #region PrivateMethod
+        #endregion
+        #region Publicethod
+        #endregion
     }
 }

@@ -13,5 +13,16 @@ namespace EatCodeDesktop.Helper
         Task<string> UpdateRecipe(UpdateRecipeRequestModel model);
         Task<bool> DeleteRecipe(Guid guid);
         Task<List<RecipeDTO>> GetAllRecipes();
+
+
+        // matrix
+        Task<bool> CreateDishe(DisheDTO model);
+        Task<bool> UpdateDishe(DisheDTO model);
+        Task<bool> DeleteDishe(DisheDTO model);
+
+
+        Task<bool> CreateDrink(DrinkDTO model);
+        Task<bool> UpdateDrink(DrinkDTO model);
+        Task<bool> DeleteDrink(DrinkDTO model);
     }
 }

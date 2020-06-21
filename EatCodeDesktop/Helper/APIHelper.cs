@@ -128,6 +128,19 @@ namespace EatCodeDesktop.Helper
             return data;
         }
 
-       
+        public Task<bool> CreateDishe(DisheDTO model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> UpdateDishe(DisheDTO model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteDishe(DisheDTO model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
