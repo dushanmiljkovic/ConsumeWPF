@@ -20,6 +20,7 @@ namespace EatCodeDesktop.ViewModels
         {
             this.apiHelper = apiHelper;
             this.windowManager = windowManager;
+            ServedType = Enum.GetValues(typeof(ServedType)).Cast<ServedType>().ToList();
         }
 
         #region Props  
@@ -69,16 +70,24 @@ namespace EatCodeDesktop.ViewModels
             }
         }
 
-        private ServedType _servedType;
-        public ServedType ServedType
+        //private ServedType _servedType;
+        //public ServedType ServedType
+        //{
+        //    get { return _servedType; }
+        //    set
+        //    {
+        //        _servedType = value;
+        //        NotifyOfPropertyChange(() => ServedType);
+        //    }
+        //}
+
+        private ServedType _selectedServedType; 
+        public ServedType SelectedServedType
         {
-            get { return _servedType; }
-            set
-            {
-                _servedType = value;
-                NotifyOfPropertyChange(() => ServedType);
-            }
-        }
+            get => _selectedServedType;
+            set => Set(ref _selectedServedType, value);
+        } 
+        public IReadOnlyList<ServedType> ServedType { get; }
 
         private string _servedOnEvents;
         public string ServedOnEvents
@@ -138,13 +147,12 @@ namespace EatCodeDesktop.ViewModels
             try
             {
                 var result = await apiHelper.CreateDishe(model);
-                ShowSimpleMessage("Created!");
+                ShowSimpleMessage("Info", "Info", "Created " + model.Name);
                 TryClose();
             }
             catch (Exception ex)
-            {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+            { 
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
 
@@ -181,7 +189,7 @@ namespace EatCodeDesktop.ViewModels
             try
             {
                 //var result = await apiHelper.UpdateDishe(model);
-                ShowSimpleMessage("Udapting disesh is disabled!");
+                ShowSimpleMessage("Udapting disesh is disabled!", "Udapting disesh is disabled!", "Udapting disesh is disabled!");
                 TryClose();
             }
             catch (Exception ex)
@@ -200,7 +208,7 @@ namespace EatCodeDesktop.ViewModels
             this.Origin = model.Origin;
             this.Season = model.Season;
             this.ServedOnEvents = model.ServedOnEvents;
-            this.ServedType = model.ServedType;
+            this.SelectedServedType = model.ServedType;
             this.ExternalLink = model.ExternalLink;
         }
         #endregion
@@ -230,7 +238,7 @@ namespace EatCodeDesktop.ViewModels
                 Name = Name,
                 Origin = Origin,
                 Season = Season,
-                ServedType = ServedType,
+                ServedType = SelectedServedType,
                 ServedOnEvents = ServedOnEvents                
             };
             return disheDto;

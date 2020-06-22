@@ -10,42 +10,42 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" /> 
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="auto" /> 
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Dishe" FontSize="48" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 20"/>
 
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="30 10">
             <TextBlock Text="Dish Info" />
-            <DockPanel>
-                <TextBlock Text="Name: " Margin="0 0 15 0"/>
+            <DockPanel  Margin="10">
+                <TextBlock Text="Name: "  />
                 <TextBox x:Name="Name" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
-                <TextBlock Text="Origin: " Margin="0 0 15 0"/>
+            <DockPanel  Margin="10">
+                <TextBlock Text="Origin: " />
                 <TextBox x:Name="Origin" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
-                <TextBlock Text="Season: " Margin="0 0 15 0"/>
+            <DockPanel  Margin="10">
+                <TextBlock Text="Season: "  />
                 <TextBox x:Name="Season" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
-                <TextBlock Text="ServedOnEvents: " Margin="0 0 15 0"/>
+            <DockPanel  Margin="10">
+                <TextBlock Text="ServedOnEvents: " />
                 <TextBox x:Name="ServedOnEvents" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
-                <TextBlock Text="ServedType: " Margin="0 0 15 0"/>
-                <TextBox x:Name="ServedType" TextAlignment="Right" MinWidth="150"/>
+            <DockPanel  Margin="10">
+                <TextBlock Text="ServedType: " />
+                <ComboBox  x:Name="ServedType" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
-                <TextBlock Text="ExternalLink: " Margin="0 0 15 0"/>
+            <DockPanel  Margin="10">
+                <TextBlock Text="ExternalLink: "/>
                 <TextBox x:Name="ExternalLink" TextAlignment="Right" MinWidth="150"/>
-            </DockPanel> 
+            </DockPanel>
         </StackPanel>
         <!--ButtonRow-->
         <Button x:Name="CreateDish" Grid.Row="2" Grid.Column="1" Content="Create Dish" Width="200" Height="50" Margin="95,0,99,134" Padding="10" VerticalAlignment="Bottom" Visibility="{Binding IsCreateMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>

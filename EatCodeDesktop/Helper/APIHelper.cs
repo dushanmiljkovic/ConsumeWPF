@@ -269,14 +269,38 @@ namespace EatCodeDesktop.Helper
             }
         }
 
-        public async Task<(Dishe, List<Drink>)> GetDishSuggestionDrinks(string disheId, DisheDrink relation)
+        public async Task<(DisheDTO, List<DrinkDTO>)> GetDishSuggestionDrinks(string disheId, DisheDrink relation)
         {
             var url = relation == DisheDrink.GoesWith ? RecipeApiEndpoints.DishDrinkGood(disheId) : RecipeApiEndpoints.DishDrinkNever(disheId);
             using (HttpResponseMessage responseMessage = await apiClient.GetAsync(url))
             {
                 if (responseMessage.IsSuccessStatusCode)
                 {
-                    var result = await responseMessage.Content.ReadAsAsync<(Dishe, List<Drink>)>();
+                    var result = await responseMessage.Content.ReadAsAsync<(DisheDTO, List<DrinkDTO>)>();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception(responseMessage.ReasonPhrase);
+                }
+            }
+        }
+
+        public async Task<bool> DerelateDisheDrink(string disheId, string drinkId, DisheDrink relation)
+        {
+            var model = new RelateDisheDrinkRequestModel()
+            {
+                DisheId = disheId,
+                DrinkId = drinkId,
+                Relation = relation
+            };
+
+            var data = ConvertObjToJsonStringContent(model);
+            using (HttpResponseMessage responseMessage = await apiClient.PostAsync(RecipeApiEndpoints.DerelateDisheDrink, data))
+            {
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    var result = await responseMessage.Content.ReadAsAsync<bool>();
                     return result;
                 }
                 else

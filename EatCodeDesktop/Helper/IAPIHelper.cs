@@ -28,7 +28,9 @@ namespace EatCodeDesktop.Helper
         Task<List<DrinkDTO>> GetAllDrinks();
 
         Task<bool> RelateDisheDrink(string disheId, string drinkId, DisheDrink relation);
-        Task<(Dishe, List<Drink>)> GetDishSuggestionDrinks(string disheId, DisheDrink relation);
+        Task<(DisheDTO, List<DrinkDTO>)> GetDishSuggestionDrinks(string disheId, DisheDrink relation);
+
+        Task<bool> DerelateDisheDrink(string disheId, string drinkId, DisheDrink relation);
 
     }
 }

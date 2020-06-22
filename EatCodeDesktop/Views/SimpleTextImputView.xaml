@@ -5,13 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EatCodeDesktop.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="350" d:DesignWidth="350" Background="White" FontSize="25">
     <Grid>
-        <StackPanel Orientation="Vertical">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />  
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" /> 
+        </Grid.ColumnDefinitions> 
+            <StackPanel Orientation="Vertical" Grid.Row="0" Margin="20">
             <TextBlock x:Name="DisplayText" FontSize="20" FontWeight="Bold" Margin="10" />
-            <TextBlock x:Name="Hint" FontSize="18" Margin="10" />
+            <TextBlock x:Name="Hint" FontSize="18" Margin="10" MinWidth="170"/>
             <TextBox x:Name="StringValue"  MinWidth="150"/>
-            <Button x:Name="Close" Padding="10" Margin="20">Done</Button>
+            <Button x:Name="Close" Width="100" Height="40" Margin="20" HorizontalAlignment="Center" VerticalAlignment="Center">+</Button>
         </StackPanel>
     </Grid>
 </UserControl>

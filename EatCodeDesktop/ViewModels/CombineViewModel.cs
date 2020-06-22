@@ -21,6 +21,7 @@ namespace EatCodeDesktop.ViewModels
         {
             this.apiHelper = apiHelper;
             this.windowManager = windowManager;
+            Relation = Enum.GetValues(typeof(DisheDrink)).Cast<DisheDrink>().ToList();
         }
 
         #region Props
@@ -74,18 +75,27 @@ namespace EatCodeDesktop.ViewModels
             }
         }
 
-        private DisheDrink _relation;
-        public DisheDrink Relation
+        //private DisheDrink _relation;
+        //public DisheDrink Relation
+        //{
+        //    get { return _relation; }
+        //    set
+        //    {
+        //        _relation = value;
+        //        NotifyOfPropertyChange(() => Relation);
+        //        NotifyOfPropertyChange(() => CanRelateDishDrink);
+        //        NotifyOfPropertyChange(() => CanShowLinksForDish);
+        //    }
+        //}
+
+        private DisheDrink _selectedRelation;
+
+        public DisheDrink SelectedRelation
         {
-            get { return _relation; }
-            set
-            {
-                _relation = value;
-                NotifyOfPropertyChange(() => Relation);
-                NotifyOfPropertyChange(() => CanRelateDishDrink);
-                NotifyOfPropertyChange(() => CanShowLinksForDish);
-            }
+            get => _selectedRelation;
+            set => Set(ref _selectedRelation, value);
         }
+        public IReadOnlyList<DisheDrink> Relation { get; }
 
         #endregion
         #region Buttons
@@ -148,11 +158,12 @@ namespace EatCodeDesktop.ViewModels
         }
         public async void DeliteDrink()
         {
+            var drinkName = SelectedDrink.Name;
             var status = await apiHelper.DeleteDrink(SelectedDrink.Id);
             if (status)
             {
-                ShowSimpleMessage("", "", "Deleted");
                 await LoadDrinks();
+                ShowSimpleMessage("Info", "Info", "Deleted " + drinkName); 
             }
             else
             {
@@ -180,10 +191,11 @@ namespace EatCodeDesktop.ViewModels
         }
         public async void RelateDishDrink()
         {
-            var status = await apiHelper.RelateDisheDrink(SelectedDishe.Id,SelectedDrink.Id,Relation);
+
+            var status = await apiHelper.RelateDisheDrink(SelectedDishe.Id,SelectedDrink.Id, SelectedRelation);
             if (status)
             {
-                ShowSimpleMessage("", "", "Related!"); 
+                ShowSimpleMessage("Info", "Info", "Related " + SelectedRelation.ToString() +" !"); 
             }
             else
             {
@@ -211,10 +223,9 @@ namespace EatCodeDesktop.ViewModels
         }
         public void ShowLinksForDish()
         {
-            //var dialogVM = IoC.Get<DrinkViewModel>();
-            //dialogVM.InitComponent(SelectedDrink);
-            //this.windowManager.ShowDialog(dialogVM, null, null); 
-            ShowSimpleMessage("", "", "Show Links for Dish");
+            var dialogVM = IoC.Get<DishLinksViewModel>();
+            dialogVM.InitComponent(SelectedDishe);
+            this.windowManager.ShowDialog(dialogVM, null, null);           
         }
 
 
@@ -228,18 +239,9 @@ namespace EatCodeDesktop.ViewModels
                 await LoadDishes();
                 await LoadDrinks();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                dynamic settings = new ExpandoObject();
-                settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                settings.ResizeMode = ResizeMode.NoResize;
-                settings.Title = "Error";
-
-                //// Get New Instance :)
-                var info = IoC.Get<StatusInfoViewModel>();
-                info.UpdateMessage("Error", "Error Geting Recipes");
-                this.windowManager.ShowDialog(info, null, settings);
+                ShowSimpleMessage("Error", "Error", ex.Message); 
             }
         }
         #endregion

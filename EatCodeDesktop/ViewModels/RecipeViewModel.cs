@@ -52,12 +52,22 @@ namespace EatCodeDesktop.ViewModels
             set { _readyIn = value; NotifyOfPropertyChange(() => ReadyIn); }
         }
 
-        private CookingSkills _skillRequired;
-        public CookingSkills SkillRequired
+        //private CookingSkills _skillRequired;
+        //public CookingSkills SkillRequired
+        //{
+        //    get { return _skillRequired; }
+        //    set { _skillRequired = value; NotifyOfPropertyChange(() => SkillRequired); }
+        //}
+
+        private CookingSkills _selectedSkillRequired;
+
+        public CookingSkills SelectedSkillRequired
         {
-            get { return _skillRequired; }
-            set { _skillRequired = value; NotifyOfPropertyChange(() => SkillRequired); }
+            get => _selectedSkillRequired;
+            set => Set(ref _selectedSkillRequired, value);
         }
+
+        public IReadOnlyList<CookingSkills> SkillRequired { get; }
 
         private int _serves;
         public int Serves
@@ -198,6 +208,7 @@ namespace EatCodeDesktop.ViewModels
 
             this.Ingredients = new BindingList<IngredientDTO>();
             this.PreparationMethod = new BindingList<string>();
+            SkillRequired = Enum.GetValues(typeof(CookingSkills)).Cast<CookingSkills>().ToList();
         }
         public void InitComponent(RecipeDTO model)
         {
@@ -210,7 +221,7 @@ namespace EatCodeDesktop.ViewModels
             PrepTime = model.PrepTime;
             CookTime = model.CookTime;
             ReadyIn = model.ReadyIn;
-            SkillRequired = model.SkillRequired;
+            SelectedSkillRequired = model.SkillRequired;
             Serves = model.Serves;
             PreparationMethod = new BindingList<string>(model.PreparationMethod);
             Description = model.Description;
@@ -246,7 +257,7 @@ namespace EatCodeDesktop.ViewModels
                 PrepTime = PrepTime,
                 CookTime = CookTime,
                 ReadyIn = ReadyIn,
-                SkillRequired = SkillRequired,
+                SkillRequired = SelectedSkillRequired,
                 Serves = Serves,
                 PreparationMethod = PreparationMethod.ToList(),
                 Description = Description,
@@ -308,13 +319,12 @@ namespace EatCodeDesktop.ViewModels
             try
             {
                 var result = await apiHelper.CreateRecipe(model);
-                ShowSimpleMessage("Created!");
+                ShowSimpleMessage("Info","Info","Created " + model.Name);
                 TryClose();
             }
             catch (Exception ex)
             {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
 
@@ -336,13 +346,13 @@ namespace EatCodeDesktop.ViewModels
         {
             try
             {
-                ShowSimpleMessage("Info", "Recipe", "Ingridiant " + SelectedIngredient.Name + " removed!");
                 Ingredients.Remove(SelectedIngredient);
+                ShowSimpleMessage("Info", "Recipe", "Ingridiant " + SelectedIngredient.Name + " removed!");
+
             }
             catch (Exception ex)
             {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
         public void AddIngredient()
@@ -353,14 +363,16 @@ namespace EatCodeDesktop.ViewModels
                 this.windowManager.ShowDialog(dialogVM, null, null);
 
                 var ingridiant = dialogVM.ExportComponent();
-                Ingredients.Add(ingridiant);
-
-                ShowSimpleMessage("Info", "Recipe", "Ingridiant Added:" + ingridiant.Name);
+                if(!string.IsNullOrWhiteSpace( ingridiant?.Name) )
+                {
+                    Ingredients.Add(ingridiant); 
+                    ShowSimpleMessage("Info", "Recipe", "Ingridiant Added:" + ingridiant.Name);
+                }
+               
             }
             catch (Exception ex)
-            {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+            { 
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
         public bool CanRemoveStept
@@ -381,13 +393,13 @@ namespace EatCodeDesktop.ViewModels
         {
             try
             {
-                ShowSimpleMessage("Info", "Recipe", "Step " + SelectedStep + " removed!");
                 PreparationMethod.Remove(SelectedStep);
+                ShowSimpleMessage("Info", "Recipe", "Step " + SelectedStep + " removed!");
+              
             }
             catch (Exception ex)
-            {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+            { 
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
         public void AddStep()
@@ -395,18 +407,20 @@ namespace EatCodeDesktop.ViewModels
             try
             {
                 var dialogVM = IoC.Get<SimpleTextImputViewModel>();
-                dialogVM.InitComponent("Add new Step", "its easy");
+                dialogVM.InitComponent("Add new Step", "Describe preparation step:");
                 this.windowManager.ShowDialog(dialogVM, null, null);
 
                 var step = dialogVM.ExportComponent();
-                PreparationMethod.Add(step);
-
-                ShowSimpleMessage("Info", "Recipe", "Step " + step + " added!");
+                if(!string.IsNullOrWhiteSpace(step))
+                {
+                    PreparationMethod.Add(step);
+                    ShowSimpleMessage("Info", "Recipe", "Step " + step + " added!");
+                }
+             
             }
             catch (Exception ex)
-            {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+            { 
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
 
@@ -430,13 +444,12 @@ namespace EatCodeDesktop.ViewModels
             try
             {
                 var result = await apiHelper.UpdateRecipe(model);
-                ShowSimpleMessage("Yey!");
+                ShowSimpleMessage("Info", "Info", "Updated");
                 TryClose();
             }
             catch (Exception ex)
-            {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+            { 
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
         #endregion
@@ -453,93 +466,5 @@ namespace EatCodeDesktop.ViewModels
             info.UpdateMessage(header, msg);
             this.windowManager.ShowDialog(info, null, settings);
         }
-
-
-
-        //public CreateRecipeRequestModel CreateRecipeRequestModel()
-        //{
-        //    var ingrids = new List<IngredientRequestModel>();
-
-        //    foreach(var ingr in Ingredients)
-        //    {
-        //        ingrids.Add(new IngredientRequestModel()
-        //        {
-        //            Name = ingr.Name,
-        //            Unit = ingr.Unit,
-        //            UnitCount = ingr.UnitCount
-        //        });
-        //    }
-
-        //    var nutritionDto = new NutritionRequestModel()
-        //    {
-        //        Kcal = Kcal,
-        //        Fat = Fat,
-        //        Saturates = Saturates,
-        //        Carbs = Carbs,
-        //        Sugars = Sugars,
-        //        Fibre = Fibre,
-        //        Protein = Protein,
-        //        Salt = Salt
-        //    };
-
-        //    var modelDto = new CreateRecipeRequestModel()
-        //    {
-        //        Name = Name,
-        //        PrepTime = PrepTime,
-        //        CookTime = CookTime,
-        //        ReadyIn = ReadyIn,
-        //        SkillRequired = SkillRequired,
-        //        Serves = Serves,
-        //        PreparationMethod = PreparationMethod.ToList(),
-        //        Description = Description,
-        //        Nutrition = nutritionDto,
-        //        Ingredients = ingrids
-        //    };
-        //    return modelDto;
-        //}
-
-        //public UpdateRecipeRequestModel UpdateRecipeRequestModel(Guid id)
-        //{
-        //    var ingrids = new List<IngredientRequestModel>();
-
-        //    foreach (var ingr in Ingredients)
-        //    {
-        //        ingrids.Add(new IngredientRequestModel()
-        //        {
-        //            Name = ingr.Name,
-        //            Unit = ingr.Unit,
-        //            UnitCount = ingr.UnitCount
-        //        });
-        //    }
-
-        //    var nutritionDto = new NutritionRequestModel()
-        //    {
-        //        Kcal = Kcal,
-        //        Fat = Fat,
-        //        Saturates = Saturates,
-        //        Carbs = Carbs,
-        //        Sugars = Sugars,
-        //        Fibre = Fibre,
-        //        Protein = Protein,
-        //        Salt = Salt
-        //    };
-
-        //    var modelDto = new UpdateRecipeRequestModel()
-        //    {
-        //        Id = id,
-        //        Name = Name,
-        //        PrepTime = PrepTime,
-        //        CookTime = CookTime,
-        //        ReadyIn = ReadyIn,
-        //        SkillRequired = SkillRequired,
-        //        Serves = Serves,
-        //        PreparationMethod = PreparationMethod.ToList(),
-        //        Description = Description,
-        //        Nutrition = nutritionDto,
-        //        Ingredients = ingrids
-        //    };
-        //    return modelDto;
-        //}
-
     }
 }

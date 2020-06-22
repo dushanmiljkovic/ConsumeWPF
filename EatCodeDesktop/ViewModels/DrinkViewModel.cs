@@ -21,6 +21,7 @@ namespace EatCodeDesktop.ViewModels
         {
             this.apiHelper = apiHelper;
             this.windowManager = windowManager;
+            Type = Enum.GetValues(typeof(DrinkType)).Cast<DrinkType>().ToList();
         }
 
         #region Props
@@ -49,20 +50,29 @@ namespace EatCodeDesktop.ViewModels
                 NotifyOfPropertyChange(() => CanCreateDrink);
             }
         }
-
-       
-    
-        private DrinkType _type;
-        public DrinkType Type
-        {
-            get { return _type; }
-            set
-            {
-                _type = value;
-                NotifyOfPropertyChange(() => Type); 
-            }
-        }
          
+        //private DrinkType _type;
+        //public DrinkType Type
+        //{
+        //    get { return _type; }
+        //    set
+        //    {
+        //        _type = value;
+        //        NotifyOfPropertyChange(() => Type); 
+        //    }
+        //}
+
+        private DrinkType _selectedType;
+
+        public DrinkType SelectedType
+        {
+            get => _selectedType;
+            set => Set(ref _selectedType, value);
+        }
+
+        public IReadOnlyList<DrinkType> Type { get; }
+
+
         private int _alcoholLevel;
         public int AlcoholLevel
         {
@@ -109,14 +119,13 @@ namespace EatCodeDesktop.ViewModels
             var model = ComponentExport();
             try
             {
-                var result = await apiHelper.CreateDrink(model);
-                ShowSimpleMessage("Created!");
+                var result = await apiHelper.CreateDrink(model); 
+                ShowSimpleMessage("Info","Info", "Created " + model.Name);
                 TryClose();
             }
             catch (Exception ex)
-            {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+            { 
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
 
@@ -153,13 +162,12 @@ namespace EatCodeDesktop.ViewModels
             try
             {
                 var result = await apiHelper.UpdateDrink(model);
-                ShowSimpleMessage("Yey!");
+                ShowSimpleMessage("Info","Info", "Updated " + model.Name);
                 TryClose();
             }
             catch (Exception ex)
-            {
-                var test = ex.Message;
-                ShowSimpleMessage("Error", "Error", test);
+            { 
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
         }
         #endregion
@@ -169,7 +177,7 @@ namespace EatCodeDesktop.ViewModels
         {
             this.Id = model.Id;
             this.Name = model.Name; 
-            this.Type = model.Type;
+            this.SelectedType = model.Type;
             this.AlcoholLevel = model.AlcoholLevel; 
         }
 
@@ -198,7 +206,7 @@ namespace EatCodeDesktop.ViewModels
                 Id = Id, 
                 Name = Name, 
                 AlcoholLevel = AlcoholLevel,
-                Type = Type
+                Type = SelectedType
             };
             return drinkDto;
         }

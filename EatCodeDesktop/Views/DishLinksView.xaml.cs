@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace EatCodeDesktop.Views
 {
     /// <summary>
-    /// Interaction logic for RecipeView.xaml
+    /// Interaction logic for DishLinksView.xaml
     /// </summary>
-    public partial class RecipeXXView : UserControl
+    public partial class DishLinksView : UserControl
     {
-        public RecipeXXView()
+        public DishLinksView()
         {
             InitializeComponent();
         }

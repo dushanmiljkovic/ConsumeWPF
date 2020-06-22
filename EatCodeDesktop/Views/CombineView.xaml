@@ -39,7 +39,8 @@
         <!--Column 1-->
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="2" Margin="20 0">
             <TextBlock Text="Relate" />
-            <TextBox x:Name="Relation" MinWidth="100" Margin="0 0 0 10"/>
+            <!--<TextBox x:Name="Relation" MinWidth="100" Margin="0 0 0 10"/>-->
+            <ComboBox x:Name="Relation"  MinWidth="100" Margin="0 0 0 10" />
             <Button x:Name="RelateDishDrink" Content="Relate them!" Margin="0 0 0 30" Padding="5"/>
             <Button x:Name="ShowLinksForDish" Content="Show Relations" Padding="5" /> 
         </StackPanel>

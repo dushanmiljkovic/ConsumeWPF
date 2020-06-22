@@ -82,19 +82,21 @@
     <Compile Include="Helper\MessageBoxHelper.cs" />
     <Compile Include="Helper\ModelFactory.cs" />
     <Compile Include="ViewModels\CombineViewModel.cs" />
+    <Compile Include="ViewModels\DishLinksViewModel.cs" />
     <Compile Include="ViewModels\DishViewModel.cs" />
     <Compile Include="ViewModels\DrinkViewModel.cs" />
     <Compile Include="ViewModels\IngredientViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\RecipesViewModel.cs" />
     <Compile Include="ViewModels\RecipeViewModel.cs" />
-    <Compile Include="ViewModels\RecipeXXViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="ViewModels\SimpleTextImputViewModel.cs" />
     <Compile Include="ViewModels\StatusInfoViewModel.cs" />
-    <Compile Include="ViewModels\DefaultVM.cs" />
     <Compile Include="Views\CombineView.xaml.cs">
       <DependentUpon>CombineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DishLinksView.xaml.cs">
+      <DependentUpon>DishLinksView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DishView.xaml.cs">
       <DependentUpon>DishView.xaml</DependentUpon>
@@ -114,9 +116,6 @@
     <Compile Include="Views\RecipeView.xaml.cs">
       <DependentUpon>RecipeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\RecipeXXView.xaml.cs">
-      <DependentUpon>RecipeXXView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -131,6 +130,10 @@
       <DependentUpon>StatusInfoView.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\CombineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DishLinksView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -155,10 +158,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RecipeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\RecipeXXView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

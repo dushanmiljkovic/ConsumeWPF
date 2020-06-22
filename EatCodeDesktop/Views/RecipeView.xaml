@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:EatCodeDesktop.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="545" d:DesignWidth="1000" Background="White" FontSize="24">
+             d:DesignHeight="800" d:DesignWidth="1000" Background="White" FontSize="24">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -13,43 +13,43 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Recipe" FontSize="48" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 0 0 20"/>
 
         <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Margin="20 0">
             <TextBlock Text="Basic Info" />
-            <DockPanel>
-                <TextBlock Text="Name: " Margin="0 0 15 0"/>
+            <DockPanel Margin="10">
+                <TextBlock Text="Name:"/>
                 <TextBox x:Name="Name" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="PrepTime: " Margin="0 0 15 0"/>
                 <TextBox x:Name="PrepTime" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="CookTime: " Margin="0 0 15 0"/>
                 <TextBox x:Name="CookTime" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="ReadyIn: " Margin="0 0 15 0"/>
                 <TextBox x:Name="ReadyIn" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="SkillRequired: " Margin="0 0 15 0"/>
-                <TextBox x:Name="SkillRequired" TextAlignment="Right" MinWidth="150"/>
+                <ComboBox x:Name="SkillRequired"  MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Serves: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Serves" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Description: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Description" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
@@ -58,41 +58,41 @@
         <!--Column 2-->
         <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1" Margin="20 0">
             <TextBlock Text="Nutrition" />
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Kcal: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Kcal" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Fat: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Fat" TextAlignment="Right" MinWidth="150"/>
-            </DockPanel>
-            <DockPanel>
+            </DockPanel >
+            <DockPanel Margin="10">
                 <TextBlock Text="Saturates: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Saturates" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Carbs: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Carbs" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Sugars: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Sugars" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Fibre: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Fibre" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Protein: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Protein" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
-            <DockPanel>
+            <DockPanel Margin="10">
                 <TextBlock Text="Salt: " Margin="0 0 15 0"/>
                 <TextBox x:Name="Salt" TextAlignment="Right" MinWidth="150"/>
             </DockPanel>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="1" Margin="20 0">
+        <StackPanel Orientation="Vertical" Grid.Column="3" Grid.Row="1">
             <TextBlock Text="Ingredients" />
             <ListBox x:Name="Ingredients"  MinHeight="80" MinWidth="150" SelectedItem="{Binding SelectedIngredient}" ScrollViewer.IsDeferredScrollingEnabled="True">
                 <ListBox.ItemTemplate>
@@ -105,10 +105,9 @@
                 <Button x:Name="RemoveIngredient" Content="- "   MinHeight="10" MinWidth="40" Padding="5" Margin="5"/>
                 <Button x:Name="AddIngredient" Content="+"   MinHeight="10" MinWidth="40" Padding="5" Margin="5"/>
             </StackPanel>
-
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="2" Margin="20 0">
+        <StackPanel Orientation="Vertical" Grid.Column="3" Grid.Row="2">
             <TextBlock Text="Preparation Method" />
             <ListBox x:Name="PreparationMethod"  MinHeight="200" MinWidth="150" SelectedItem="{Binding SelectedStep}" ScrollViewer.IsDeferredScrollingEnabled="True">
                 <!--<ListBox.ItemTemplate>
@@ -124,6 +123,6 @@
         </StackPanel>
 
         <Button x:Name="CreateRecipe" Grid.Row="2" Grid.Column="0" Content="Create Recipe" Width="200" Height="50" Margin="75,0,79,222" VerticalAlignment="Bottom" Visibility="{Binding IsCreateMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-        <Button x:Name="UpdateRecipe" Grid.Row="2" Grid.Column="1" Content="Update Recipe" Width="200" Height="50" Margin="81,0,73,222" VerticalAlignment="Bottom" Visibility="{Binding IsEditMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+        <Button x:Name="UpdateRecipe" Grid.Row="2" Grid.Column="0" Content="Update Recipe" Width="200" Height="50" Margin="81,0,73,222" VerticalAlignment="Bottom" Visibility="{Binding IsEditMode, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

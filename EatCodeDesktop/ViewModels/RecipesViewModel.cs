@@ -58,18 +58,9 @@ namespace EatCodeDesktop.ViewModels
                 base.OnViewLoaded(view);
                 await LoadRecipes();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                dynamic settings = new ExpandoObject();
-                settings.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-                settings.ResizeMode = ResizeMode.NoResize;
-                settings.Title = "Error";
-
-                //// Get New Instance :)
-                var info = IoC.Get<StatusInfoViewModel>();
-                info.UpdateMessage("Error", "Error Geting Recipes");
-                this.windowManager.ShowDialog(info, null, settings);
+                ShowSimpleMessage("Error", "Error", ex.Message); 
             }
         }
         #endregion
@@ -121,15 +112,26 @@ namespace EatCodeDesktop.ViewModels
         }
         public async void DeliteRecipe()
         {
-            var status = await apiHelper.DeleteRecipe(SelectedRecipe.Id);
-            if (status)
+            var name = SelectedRecipe.Name;
+
+            try
             {
-                ShowSimpleMessage("","","Deleted");
-                await LoadRecipes(); 
+                var status = await apiHelper.DeleteRecipe(SelectedRecipe.Id);
+                if (status)
+                {
+                    await LoadRecipes();
+                    ShowSimpleMessage("Info", "Info", "Deleted " + name);
+
+                }
+                else
+                {
+                    ShowSimpleMessage("Error", "Error", "Error");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ShowSimpleMessage("Error", "Error", "Error");
+
+                ShowSimpleMessage("Error", "Error", ex.Message);
             }
           
         }
